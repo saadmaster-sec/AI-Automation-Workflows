@@ -94,8 +94,8 @@ The intended pipeline allows Florence to retrieve relevant information from the 
 ```text
 florence-multimodal-gym-assistant/
 ├── workflows/
-│   ├── Telegram-Agent-sanitized.json
-│   └── RAG-Pipeline-sanitized.json
+│   ├── Telegram-Agent.json
+│   └── RAG-Pipeline.json
 ├── data/
 ├── docs/
 └── screenshots/
@@ -174,6 +174,14 @@ The repository is intended to contain sanitized workflow exports, not live crede
 - Build a repeatable test suite for text, voice, image, and retrieval paths.
 - Add monitoring, error handling, and retry logic.
 - Add a booking integration only when a real booking system is available.
+
+## Workflow Screenshots
+
+### Telegram Agent
+![Telegram Agent workflow](screenshots/Telegram-Agent-Canvas.png)
+
+### RAG Pipeline
+![RAG Pipeline workflow](screenshots/RAG-Pipeline-Canvas.png)
 
 ## Project Purpose
 
