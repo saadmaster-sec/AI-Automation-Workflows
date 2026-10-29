@@ -1,1 +1,19 @@
 
+# Secrets and environment variables
+.env
+.env.*
+!.env.example
+secrets/
+credentials.json
+token.json
+
+# Dependencies and generated files
+node_modules/
+__pycache__/
+*.pyc
+
+# Local and temporary files
+.DS_Store
+Thumbs.db
+*.log
+
