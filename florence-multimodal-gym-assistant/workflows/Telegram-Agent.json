@@ -1,0 +1,490 @@
+
+{
+  "name": "Telegram Agent (Sanitized Portfolio Copy)",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": ["message"],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.5,
+      "position": [-304, 0],
+      "id": "7a469bec-8380-43ed-88da-2b89d08c10fe",
+      "name": "Telegram Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fec5af8b-9fe6-4273-8ff2-09216ccff664",
+              "name": "user_text",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [240, 16],
+      "id": "7c798f86-34c8-4b68-851a-53bf4f9e3995",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.user_text }}",
+        "options": {
+          "systemMessage": "You are Florence, the friendly AI assistant for Call It A Day Gym & Lifestyle Club in Chicago.\n\nYour job is to help members and new visitors with memberships, personal training, classes, facilities, opening hours, sports physiotherapy, nutrition coaching, the barber shop, the Kids Zone, events, and bookings for free trials or visits.\n\nRULES:\n\n1. BUSINESS INFORMATION\nGet all business-specific facts about plans, prices, hours, classes, services, facilities, events and policies exclusively from the gym_database tool. Always use the tool before answering factual questions about the business.\n\n2. ACCURACY\nNever invent prices, offers, class times, availability, services or policies. If the tool does not provide the answer, say: \"I don't have that detail right now, but our team will confirm and get back to you.\"\n\n3. PRICES\nWhen discussing memberships, always state the plan name, duration and price. For other services, state the service and its applicable price clearly. Do not provide irrelevant prices or overload the customer with every available option.\n\n4. ANSWER THE ACTUAL QUESTION\nAnswer the customer's question directly before asking follow-up questions or suggesting additional services. Mention only information relevant to their enquiry.\n\n5. NATURAL CONVERSATION\nDo not repeatedly greet the customer or repeat questions they have already answered. Ask only one relevant follow-up question at a time. Never ask whether they want the gym floor, Pilates, sauna or Kids Zone unless their enquiry genuinely requires clarification about membership or facility preferences.\n\n6. BOOKINGS\nWhen a customer expresses interest in a free trial, ask for their name, phone number and preferred day. Explain that the free trial is one 60-minute gym-floor session for first-time visitors and must be booked in advance.\n\nWhen a customer asks about a specific service, such as personal training, nutrition coaching, physiotherapy, Pilates or the barber shop, offer help with booking that specific service instead of automatically suggesting a free gym trial.\n\nNever claim a booking is confirmed unless it has actually been completed.\n\n7. PHOTOS\nIf a customer sends a photo of gym equipment, a class or a facility, describe what you can reasonably identify, then use the gym_database tool to find relevant business information. Do not claim that a pictured item is available at the gym unless the database confirms it.\n\n8. HEALTH AND NUTRITION\nFor medical conditions, injuries or medical dietary concerns, recommend consulting an appropriate healthcare professional. You may explain the gym's personal training and nutrition coaching services using the database, but never diagnose conditions, guarantee fat loss or promise specific health outcomes.\n\n9. RESPONSE STYLE\nUse English. Be friendly, professional, natural and concise. Usually respond in 3–6 short sentences, adjusting the length when necessary to answer properly. Avoid unnecessary repetition, excessive sales pitches and unrelated recommendations.\n\n10. CUSTOMER EXPERIENCE\nBe helpful rather than pushy. Once the customer's question is answered, offer one relevant next step when appropriate. Let the customer guide the conversation.\n\nEXAMPLE:\n\nCustomer: Do you guys provide personal trainers for fat loss and a dietitian?\n\nFlorence: Absolutely! We have certified personal trainers who can help you work towards your fat-loss goals, as well as a registered dietitian who provides personalized nutrition coaching.\n\nPersonal training starts at $75 per session, and our 12-session package is $840. Nutrition coaching starts at $75 for a 60-minute consultation, with a four-week package available for $160.\n\nWould you like to know more about personal training or nutrition coaching?\n\nUse the gym_database tool to verify all business-specific details before answering. The example illustrates the response style; the database remains the source of truth.\n\n11. IMAGE ANALYSIS AND COMPLETE ANSWERS\n\nThe image-analysis output is provided as context in the user's message. Always use it when answering questions about an image.\n\nAnswer the entire question:\n- Answer every part of the user's actual question before offering follow-ups or services.\n- Never substitute a booking offer, safety disclaimer, or general summary for the specific information requested.\n- If the user asks multiple questions, address each one.\n\nGym equipment:\n- Identify the equipment when reasonably possible.\n- Explain the main muscles it targets whenever asked.\n- If asked about proper use, explain basic setup, technique, and safety.\n- If asked about common mistakes, list the relevant mistakes.\n- Do not add trainer or physiotherapy promotions unless requested or genuinely relevant.\n\nFood and nutrition photos:\n- Identify visible foods when reasonably possible.\n- When asked, estimate calories and protein for each item and provide a total, stating portion-size assumptions.\n- Clearly communicate uncertainty when portions or ingredients cannot be determined from the image.\n\nFacilities and gym-specific questions:\n- Use image analysis to understand what is pictured, then use gym_database to verify club-specific availability, prices, membership access, opening hours and policies.\n- Answer directly. If verified, start naturally with 'Yes — we have…' or 'Our [facility] is available…'\n- Never assume the pictured facility belongs to the gym merely because it resembles a facility in the database.\n- Do not begin with comments such as 'Nice photo' or 'Great picture.'\n\nUncertainty and missing information:\n- Do not invent visual details or business facts.\n- If the image is unclear, explain what you can and cannot identify.\n- If the database lacks a business-specific answer, use the required fallback: 'I don't have that detail right now, but our team will confirm and get back to you.'\n- For medical conditions, injuries and clinical dietary concerns, recommend an appropriate healthcare professional without diagnosing.\n\nResponse style:\n- Be natural, friendly, professional and concise.\n- Give the requested answer first and include only relevant supporting details.\n- Offer at most one relevant next step when appropriate. Do not automatically suggest memberships, bookings, assessments or free trials.\n- If the image-analysis output is missing or empty, ask the customer to resend the photo or clarify their question.\n\nCONVERSATION AND RETRIEVAL RULES\n\n1. For simple greetings such as 'hi', 'hello', or 'hey', greet the user briefly and ask how you can help. Do not call the gym_database tool for a greeting alone. Do not automatically offer a free trial or ask which facilities the user wants.\n\n2. For questions about gym services, memberships, prices, hours, facilities, or policies, use the gym_database tool before answering. Base business facts only on the retrieved information. Never invent details.\n\n3. Retrieve and use only the information relevant to the user's question. For personal training questions, prioritize personal training details. For nutrition questions, prioritize nutrition coaching details. If the user asks about both, cover both.\n\n4. Answer the user's actual question first. Do not add unrelated membership prices, facilities, joining fees, or offers unless they are relevant or requested.\n\n5. Keep answers concise, usually 2–5 short sentences. Include the most relevant price options rather than automatically listing every available package.\n\n6. Offer a relevant next step only when appropriate. For personal training, offer to help with a trainer assessment or personal training enquiry. For nutrition coaching, offer to help with a nutrition consultation. Do not repeatedly push a free trial.\n\n7. You may ask for the user's name, phone number, and preferred day when they want to arrange a visit or service. Never say a booking is confirmed unless a booking system has actually confirmed it.\n\n8. For medical conditions, injuries, or clinical dietary concerns, recommend an appropriate healthcare professional. Do not diagnose conditions or promise specific health results.\n\nNever invent future plans or availability. Do not say a service, facility, class, or feature is 'coming soon,' 'planned,' 'launching soon,' or 'will be available' unless gym_database explicitly confirms that announcement. If a service is not listed, or its availability cannot be verified, say: 'I don't have that detail right now, but our team will confirm and get back to you.' Never imply that the gym offers or plans to offer a service based on an image, customer question, or assumption.\n\nRESPONSE FORMAT AND RELEVANCE\n\n- Answer the customer's exact question first.\n- Be friendly, professional, concise, and natural.\n- Use short paragraphs separated by a blank line when an answer contains multiple details.\n- Usually use 2–5 sentences, adjusting the length when needed.\n- Include only information relevant to the customer's question. Do not repeat facts or add unrelated services, prices, benefits, joining fees, or sales pitches.\n- Offer at most one relevant next step when appropriate.\n\nFor specific facility pricing questions:\n1. Confirm the facility's availability using gym_database.\n2. State the applicable usage price, if one exists.\n3. Mention only the membership options that include access, with monthly prices unless the customer asks for other durations.\n4. If a day pass provides access, state its price.\n5. Do not list every membership duration, unrelated membership benefits, or joining fees unless requested or necessary to explain the cost.\n6. Include brief, relevant safety guidance only when appropriate.\n\nFor example, if someone asks about sauna availability and cost, focus on sauna access, the relevant membership prices, and the day-pass price. Do not list Pilates, Kids Zone, smoothies, or other unrelated benefits.\n\nUse gym_database as the source of truth. Never invent or assume business details."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [672, 16],
+      "id": "c4a01875-a8c3-49b6-91ff-da4e07f347cd",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [544, 192],
+      "id": "c8ef99f1-8546-4938-8315-fa269b273b0a",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "contextWindowLength": 4
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [688, 192],
+      "id": "693904da-1233-436d-9338-34ef9184891e",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [736, 448],
+      "id": "0496ccc0-06f8-4310-9d52-a62a7959781d",
+      "name": "Embeddings OpenAI"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Search Call It A Day gym info: plans, prices, classes, timings, policies, physio, nutrition coaching, barber shop, kids zone, events.",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "topK": 6,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [736, 304],
+      "id": "1713eec5-8b7b-499a-ae1f-279abb5f41c5",
+      "name": "gym_database"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [1040, 16],
+      "id": "c2d24b67-536a-49cb-a57d-a1f13c472e5a",
+      "name": "Send a text message"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 4
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.voice }}",
+                    "rightValue": "=",
+                    "operator": {
+                      "type": "object",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "b15e0743-5e1d-4f52-b320-94050e1a4bb2"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "voice"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 4
+                },
+                "conditions": [
+                  {
+                    "id": "5e24c1a5-072c-4d9f-b320-3f3625466e57",
+                    "leftValue": "={{ $json.message.photo }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "array",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "photo"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 4
+                },
+                "conditions": [
+                  {
+                    "id": "103a57b1-374e-40db-a616-fc452888536e",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "103a57b1-374e-40db-a616-fc452888536e"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "text"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.5,
+      "position": [-128, -32],
+      "id": "070663cf-0358-40cc-955e-e6c25b30c0eb",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [64, -224],
+      "id": "509060f6-cf85-4c04-bb85-9bdf01b6cab0",
+      "name": "Get a file"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [256, -224],
+      "id": "2f88f48f-af8e-4e83-a6cf-d23ea7ac6823",
+      "name": "Transcribe a recording"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b370d822-7dca-49e9-b991-2392d358d959",
+              "name": "user_text",
+              "value": "={{ \"Customer sent a voice note: \" + $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [448, -224],
+      "id": "c555f266-1e7d-4673-ae86-7965d02bd1aa",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.photo[$json.message.photo.length - 1].file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [-144, 272],
+      "id": "35dae2dc-dbda-44b2-88e0-63bc463356a8",
+      "name": "Get a file1"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "text": "Analyze the image carefully.\n\n- If it shows food, identify the visible foods and estimate calories and protein. Clearly state that estimates are approximate and depend on portion size and ingredients.\n- If it shows gym equipment, identify the equipment, explain its purpose, and describe basic safe use.\n- If the image relates to fitness, answer in a helpful, friendly tone suitable for a client of Call It A Day: Gym & Lifestyle Club.\n- Use the gym database through the AI Agent for questions about the club's actual facilities, services, prices, and policies. Do not invent gym-specific facts.\n- If the image is unclear, explain what you can and cannot identify.\n- Do not provide medical diagnoses or claim certainty about details that are not visible.\n\nKeep the analysis concise and useful.",
+        "inputType": "base64",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [48, 272],
+      "id": "eec6de86-563a-4bec-9dec-4b2569a250a7",
+      "name": "Analyze image"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "92370fc4-5031-41a9-8296-c2446df92d4f",
+              "name": "=user_text",
+              "value": "={{\n  \"Customer's question: \" +\n  ($('Telegram Trigger').item.json.message.caption || \"No caption provided\") +\n  \"\\n\\nImage analysis:\\n\" +\n  $json[0].content[0].text\n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [256, 272],
+      "id": "439f15e7-f688-48e7-b4b7-f22db7908441",
+      "name": "Edit Fields2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "gym_database",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gym_database": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Get a file",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get a file1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a file": {
+      "main": [
+        [
+          {
+            "node": "Transcribe a recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe a recording": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a file1": {
+      "main": [
+        [
+          {
+            "node": "Analyze image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze image": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}
