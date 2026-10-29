@@ -175,6 +175,12 @@ The repository is intended to contain sanitized workflow exports, not live crede
 - Add monitoring, error handling, and retry logic.
 - Add a booking integration only when a real booking system is available.
 
+## Project Purpose
+
+This project demonstrates practical experience with AI workflow orchestration, multimodal messaging, document ingestion, vector search, conversational memory, and retrieval-grounded assistant design.
+
+It is a learning and portfolio project, and its workflow exports should be validated in a configured environment before real-world use.
+
 ## Workflow Screenshots
 
 ### Telegram Agent
@@ -182,9 +188,3 @@ The repository is intended to contain sanitized workflow exports, not live crede
 
 ### RAG Pipeline
 ![RAG Pipeline workflow](screenshots/RAG-Pipeline-Canvas.png)
-
-## Project Purpose
-
-This project demonstrates practical experience with AI workflow orchestration, multimodal messaging, document ingestion, vector search, conversational memory, and retrieval-grounded assistant design.
-
-It is a learning and portfolio project, and its workflow exports should be validated in a configured environment before real-world use.
