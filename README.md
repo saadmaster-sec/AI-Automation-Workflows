@@ -37,21 +37,6 @@ The project is intended for learning and experimentation. Workflow exports and i
 
 Technologies vary by project.
 
-## Repository Structure
-
-```text
-AI-Automation-Workflows/
-└── florence-multimodal-gym-assistant/
-    ├── workflows/
-    ├── docs/
-    ├── screenshots/
-    ├── data/
-    ├── README.md
-    └── .gitignore
-```
-
-Additional projects will be added as they are developed.
-
 ## Project Documentation
 
 Each project has its own folder containing its README and supporting materials. Depending on the project, these may include workflow exports, screenshots, setup notes, and technical documentation.
